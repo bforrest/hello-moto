@@ -20,3 +20,10 @@ Use the NASA API described [here](https://api.nasa.gov) to build a project that 
 - Bonus: unit tests, static analysis, performance tests, or any other things you feel are important to meet Acceptance Criteria for Definition of Done
 - Double Bonus: have the application display the image in a web browser
 - Triple Bonus: have the application run in a Docker container
+
+
+## Barry's notes:
+
+- Added the dates.txt file to the csproj file and set it to copy to the output directory.
+- Set an environment variable for the API_KEY value. I hear that nasty things happen when keys are stored in source control and most folks have them as variables withing their CI/CD 
+- I learned a *cheat* to convert [JSON to C#][https://json2csharp.com/] so I used Postman to get a sample of the JSON response and fed it to the transmorgifier to get a DTO class for my model.
