@@ -1,0 +1,15 @@
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/MarsRoverImageLoader.deps.json
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/MarsRoverImageLoader.runtimeconfig.json
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/MarsRoverImageLoader.runtimeconfig.dev.json
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/MarsRoverImageLoader.dll
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/ref/MarsRoverImageLoader.dll
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/bin/Debug/net5.0/MarsRoverImageLoader.pdb
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.csprojAssemblyReference.cache
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.GeneratedMSBuildEditorConfig.editorconfig
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.AssemblyInfoInputs.cache
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.AssemblyInfo.cs
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.csproj.CoreCompileInputs.cache
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.dll
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/ref/MarsRoverImageLoader.dll
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.pdb
+/Users/barryforrest/RiderProjects/MarsRover/MarsRoverImageLoader/obj/Debug/net5.0/MarsRoverImageLoader.genruntimeconfig.cache
