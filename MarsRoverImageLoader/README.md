@@ -24,6 +24,6 @@ Use the NASA API described [here](https://api.nasa.gov) to build a project that 
 
 ## Barry's notes:
 
-- Added the dates.txt file to the csproj file and set it to copy to the output directory.
+- Added the dates.txt file to the csproj file and set it to copy to the output directory. Then when I decided to create the Photos folder, I used the Parent.Parent.Parent hack to get to the project directory instead.
 - Set an environment variable for the API_KEY value. I hear that nasty things happen when keys are stored in source control and most folks have them as variables withing their CI/CD 
 - I learned a *cheat* to convert [JSON to C#][https://json2csharp.com/] so I used Postman to get a sample of the JSON response and fed it to the transmorgifier to get a DTO class for my model.
