@@ -27,7 +27,7 @@ namespace MarsRoverImageLoader
             
             ProjectRootPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
             
-            ApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? throw new ArgumentNullException("ApiKey for the NASA APIs must be specified");
+            ApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "DEMO_KEY";
                 
             PhotoSaveRoot = Environment.GetEnvironmentVariable("PhotoSaveRoot") ?? Path.Join(ProjectRootPath , "Photos");
 
