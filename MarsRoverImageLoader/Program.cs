@@ -171,24 +171,5 @@ namespace MarsRoverImageLoader
         private static ConsoleColor ErrorColor;
 
         private static ConsoleColor MilestoneColor;
-        /*
-         *  var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage);
-
-                if (httpResponseMessage.IsSuccessStatusCode)
-                {
-                    if (responseIsJson)
-                    {
-                        var responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-                        var response = JsonConvert.DeserializeObject<T>(responseJson);
-                        return response;
-                    }
-                    else if (typeof(T) == typeof(Stream))
-                    {
-                        return await httpResponseMessage.Content.ReadAsStreamAsync() as T;
-                    }
-
-                    return default(T);
-                }
-         */
     }
 }
