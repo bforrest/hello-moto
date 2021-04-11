@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -22,10 +22,11 @@ namespace MarsRoverImageLoader
         
         static async Task Main(string[] args)
         {
-            DefaultForeground = Console.ForegroundColor;
-            ErrorColor = ConsoleColor.Red;
-            
-            ProjectRootPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+             DefaultForeground = Console.ForegroundColor;
+             ErrorColor = ConsoleColor.Red;
+             MilestoneColor = ConsoleColor.Green;
+
+             ProjectRootPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
             
             ApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "DEMO_KEY";
                 
@@ -35,11 +36,11 @@ namespace MarsRoverImageLoader
             {
                 Directory.CreateDirectory(PhotoSaveRoot);
             }
-            
+
             client = new HttpClient();
 
-            Console.WriteLine($"Project directory: {ProjectRootPath}");
-            
+            LogMileStone($"Project directory: {ProjectRootPath}");
+            LogMileStone($"Photo directory - {PhotoSaveRoot}");
 
             var expectedPath = Path.Join(ProjectRootPath, DATA_FILE);
             
@@ -49,7 +50,7 @@ namespace MarsRoverImageLoader
                 return;
             }
             
-            var inputStrings = File.ReadAllLines(expectedPath);
+            var inputStrings = await File.ReadAllLinesAsync(expectedPath);
 
             Console.WriteLine("Parsing dates from source file.");
             
@@ -98,7 +99,7 @@ namespace MarsRoverImageLoader
                 var responseJson = await nasaReply.Content.ReadAsStringAsync();
                 var response = JsonSerializer.Deserialize<RoverDtoClasses.Root>(responseJson);
 
-                Console.WriteLine($"Date {date} has #{response.photos.Capacity} photos to retrieve.");
+                LogMileStone($"Date {date} has #{response.photos.Capacity} photos to retrieve.");
                 foreach (var photo in response.photos)
                 {
                     await DownloadImage(photo);
@@ -110,7 +111,7 @@ namespace MarsRoverImageLoader
                 throw;
             }
             
-            Console.WriteLine($"Completed photo list for {date}!");
+            LogMileStone($"Completed photo list for {date}!");
         }
 
         private static async Task DownloadImage(RoverDtoClasses.Photo photo)
@@ -152,10 +153,24 @@ namespace MarsRoverImageLoader
             Console.WriteLine(message);
             ToggleErrorColor();
         }
+
+        private static void LogMileStone(string message)
+        {
+            ToggleMilestone();
+            Console.WriteLine(message);
+            ToggleMilestone();
+        }
+
+        private static void ToggleMilestone()
+        {
+            Console.ForegroundColor = Console.ForegroundColor == DefaultForeground ? MilestoneColor : DefaultForeground;
+        }
         
         private static ConsoleColor DefaultForeground;
 
         private static ConsoleColor ErrorColor;
+
+        private static ConsoleColor MilestoneColor;
         /*
          *  var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage);
 
