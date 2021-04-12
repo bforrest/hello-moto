@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace MarsRoverImageLoader
         
         private static HttpClient client;
         
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
              DefaultForeground = Console.ForegroundColor;
              ErrorColor = ConsoleColor.Red;
@@ -71,19 +70,9 @@ namespace MarsRoverImageLoader
             Console.WriteLine("Date parsing complete.");
         }
 
-        private static async Task FetchImageList(IEnumerable<DateTime> requestedDates)
-        {
-            Console.WriteLine("Fetching images for requested dates.");
-
-            foreach (var date in requestedDates)
-            {
-                await GetImageList(date);
-            }
-        }
-
         private static async Task GetImageList(DateTime date)
         {
-            var uri = new Uri($"{NASA_URI}?earth_date={date.ToString("yyyy-MM-dd")}&api_key={ApiKey}");
+            var uri = new Uri($"{NASA_URI}?earth_date={date:yyyy-MM-dd}&api_key={ApiKey}");
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             try
             {
@@ -133,7 +122,7 @@ namespace MarsRoverImageLoader
             }
             else
             {
-                using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Inheritable, 4096,
+                await using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Inheritable, 4096,
                     FileOptions.Asynchronous))
                 {
                     await imageReply.Content.CopyToAsync(fs);
