@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -21,11 +21,11 @@ namespace MarsRoverImageLoader
         
         private static async Task Main(string[] args)
         {
-             DefaultForeground = Console.ForegroundColor;
-             ErrorColor = ConsoleColor.Red;
-             MilestoneColor = ConsoleColor.Green;
+            DefaultForeground = Console.ForegroundColor;
+            ErrorColor = ConsoleColor.Red;
+            MilestoneColor = ConsoleColor.Green;
 
-             ProjectRootPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
+            ProjectRootPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
             
             ApiKey = Environment.GetEnvironmentVariable("API_KEY") ?? "DEMO_KEY";
                 
@@ -52,14 +52,16 @@ namespace MarsRoverImageLoader
             var inputStrings = await File.ReadAllLinesAsync(expectedPath);
 
             Console.WriteLine("Parsing dates from source file.");
+
+            var dates = new List<DateTime>();
             
             foreach (var item in inputStrings)
             {
-                Console.WriteLine($"processing value {item}");
+                Console.WriteLine($"validating value {item}");
 
                 if (DateTime.TryParse(item, out var aDate))
                 {
-                    await GetImageList(aDate);
+                    dates.Add(aDate);
                 }
                 else
                 {
@@ -67,28 +69,38 @@ namespace MarsRoverImageLoader
                 }
             }
             
-            Console.WriteLine("Date parsing complete.");
+            LogMileStone("Text file data validated.");
+            
+            var tasks = dates.Select(async item =>
+            {
+                await GetImageList(item);
+            });
+
+            await Task.WhenAll(tasks);
+
+            LogMileStone("Image retrieval completed.");
         }
 
         private static async Task GetImageList(DateTime date)
         {
-            var uri = new Uri($"{NASA_URI}?earth_date={date:yyyy-MM-dd}&api_key={ApiKey}");
+            var formattedDate = date.ToString("yyyy-MM-dd");
+            var uri = new Uri($"{NASA_URI}?earth_date={formattedDate}&api_key={ApiKey}");
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             try
             {
-                Console.WriteLine("Fetching images for requested dates.");
+                Console.WriteLine($"Fetching images for {formattedDate}.");
                 var nasaReply = await client.SendAsync(request);
 
                 if (!nasaReply.IsSuccessStatusCode)
                 {
-                    LogError($"Request for {date} returned status code: {nasaReply.StatusCode}");
+                    LogError($"Request for {formattedDate} returned status code: {nasaReply.StatusCode}");
                     return;
                 }
 
                 var responseJson = await nasaReply.Content.ReadAsStringAsync();
                 var response = JsonSerializer.Deserialize<RoverDtoClasses.Root>(responseJson);
 
-                LogMileStone($"Date {date} has #{response.photos.Capacity} photos to retrieve.");
+                LogMileStone($"Date {formattedDate} has #{response.photos.Capacity} photos to retrieve.");
                 foreach (var photo in response.photos)
                 {
                     await DownloadImage(photo);
@@ -100,7 +112,7 @@ namespace MarsRoverImageLoader
                 throw;
             }
             
-            LogMileStone($"Completed photo list for {date}!");
+            LogMileStone($"Completed photo list for {formattedDate}!");
         }
 
         private static async Task DownloadImage(RoverDtoClasses.Photo photo)
