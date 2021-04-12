@@ -101,18 +101,20 @@ namespace MarsRoverImageLoader
                 var response = JsonSerializer.Deserialize<RoverDtoClasses.Root>(responseJson);
 
                 LogMileStone($"Date {formattedDate} has #{response.photos.Capacity} photos to retrieve.");
-                foreach (var photo in response.photos)
+
+                var tasks = response.photos.Select(async item =>
                 {
-                    await DownloadImage(photo);
-                }
+                    await DownloadImage(item);
+                });
+
+                await Task.WhenAll(tasks);
+                LogMileStone($"Completed photo list for {formattedDate}!");
             }
             catch (Exception e)
             {
                 LogError(e.Message);
                 throw;
             }
-            
-            LogMileStone($"Completed photo list for {formattedDate}!");
         }
 
         private static async Task DownloadImage(RoverDtoClasses.Photo photo)
