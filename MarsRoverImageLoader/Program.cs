@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarsRoverImageLoader
 {
-    class Program
+    internal static class Program
     {
         private const string NASA_URI = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos";
         private const string DATA_FILE = "dates.txt";
@@ -100,7 +100,7 @@ namespace MarsRoverImageLoader
                 var responseJson = await nasaReply.Content.ReadAsStringAsync();
                 var response = JsonSerializer.Deserialize<RoverDtoClasses.Root>(responseJson);
 
-                LogMileStone($"Date {formattedDate} has #{response.photos.Capacity} photos to retrieve.");
+                LogMileStone($"Date {formattedDate} has #{response.photos.Count} photos to retrieve.");
 
                 var tasks = response.photos.Select(async item =>
                 {
