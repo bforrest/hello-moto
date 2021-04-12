@@ -1,6 +1,26 @@
 # Programming Exercise
 
+From the instructions located at [WatchGuard/coding-exercises](https://github.com/WatchGuard/coding-exercises/tree/master/mars-rover)
+
 Use the NASA API described [here](https://api.nasa.gov) to build a project that calls the Mars Rover Photos API with a given day as input, returning corresponding photo images as output. The application should download and store each image locally. The submission of the project should be via GitHub.
+
+
+## Pull the docker image
+```bash
+docker pull bforest30/rover-loader
+```
+
+## Run the container
+
+This command will run the container, save images to the ~/{user}/ folder under a new /rover/Photos folder. and clean up the container when completed. 
+It uses the default demo key, but an alternate key can easily be used instead.
+```bash
+docker run --rm -it --env API_KEY=DEMO_KEY -v ~/rover/Photos:/app/Photos bforrest30/rover-loader
+```
+
+The program does check to see if the destination file exists and does not request it again from the NASA servers.
+
+
 
 ## Acceptance Criteria
 

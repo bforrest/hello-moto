@@ -1,5 +1,5 @@
 ## build docker image
-docker build -t rover-loader -f Dockerfile .
+docker build -t bforrest30/rover-loader -f Dockerfile .
 
 
 ## create docker container
@@ -9,7 +9,7 @@ docker create --name mars-images -e API_KEY=uCagsYbUrNXe42YZyFxjlE9Zogyil4aVtc9f
 docker run --env API_KEY=uCagsYbUrNXe42YZyFxjlE9Zogyil4aVtc9f0DWb rover-loader
 
 ## color-coded console output.
-docker run --rm -it --env API_KEY=uCagsYbUrNXe42YZyFxjlE9Zogyil4aVtc9f0DWb -v /tmp/Photos:/app/Photos  rover-loader
+docker run --rm -it --env API_KEY=uCagsYbUrNXe42YZyFxjlE9Zogyil4aVtc9f0DWb -v ~/rover/Photos:/app/Photos  rover-loader
 
 
 ### mounts for storing the photos?
